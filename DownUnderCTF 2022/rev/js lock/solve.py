@@ -4,7 +4,7 @@ import hashlib
 
 sys.setrecursionlimit(2000)
 
-f = open('LOCK.txt', 'r')
+f = open('LOCK.txt', 'r')  # $node LOCK_to_json.js > LOCK.txt
 lock_list = load(f)
 f.close()
 
