@@ -3,7 +3,7 @@ protector (rev): KCTF{fl4g_h1d35_1n_pl41n_51gh7_1f_y0u_g37_r1d_0f_7h3_g4rb4g3}
 So, i read decompiled and disassembled code in ghidra and understand that this executable decode itself while running. So we need to debug this peace of sh... elf file
 
 While debugging i found this:
-
+<pre>
    0x0000000000401000:	mov    r12d,0x600000
    0x0000000000401006:	movabs r13,0x7b34b4c5a505890
    0x0000000000401010:	xor    QWORD PTR [r12],r13
@@ -15,7 +15,7 @@ While debugging i found this:
    0x0000000000401028:	xor    QWORD PTR [r12],r13
    0x000000000040102c:	sub    r12,0x18
    0x0000000000401030:	jmp    r12
-
+</pre>
 From this we can understand that code are encoded in elf body, end to decode it we need to xor it with r13
 After self decoding program do jmp $r12 (jump to decoded chunk of code)
 
