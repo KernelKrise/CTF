@@ -20,7 +20,7 @@ From this we can understand that code are encoded in elf body, end to decode it 
 After self decoding program do jmp $r12 (jump to decoded chunk of code)
 
 Then program changing $r13 register by some XORs with previous decoded values 
-
+<pre>
    0x0000000000401033:	mov    r14,r13
    0x0000000000401036:	xor    r14,QWORD PTR [r12]
    0x000000000040103a:	add    r12,0x8
@@ -40,12 +40,12 @@ Then program changing $r13 register by some XORs with previous decoded values
    0x0000000000401072:	add    r12,0x8
    0x0000000000401076:	mov    r13,r14
    0x0000000000401079:	jmp    0x401010
-
+</pre>
 And loop repeats in order to decode next code chunk...
 
 So, after hours of experiment i wrote this code:
 
-```
+<pre>
 from pwn import *
 
 
@@ -75,11 +75,11 @@ for j in range(100000):
         
     r13 = r14
     offset += 0x20
-```
+</pre>
 Usage:
-```
+<pre>
 $ python3 parse.py > asm.lst
-```
+</pre>
 
 It's going to take a long time
 
@@ -87,7 +87,7 @@ After the script is finished we get asm.lst file. So, lets examine it.
 There are a lot of dead weight code, you have to be patient
 
 At address 0x25d160 and beyond i found:
-```
+<pre>
 0x25d160
    0:   80 3f 5a                cmp    BYTE PTR [rdi], 0x5a
    3:   9f                      lahf   
@@ -104,12 +104,12 @@ At address 0x25d160 and beyond i found:
    7:   90                      nop
 
 ...
-```
+</pre>
 So, we have 61 cmp instruction. It's not hard to figure out that it is a encoded flag
 But we need to know how it was encoded
 
 I search all instructions with "rdi" register and find that:
-```
+<pre>
    0:   80 37 ec                xor    BYTE PTR [rdi], 0xec
    0:   80 07 03                add    BYTE PTR [rdi], 0x3
    0:   80 2f 6c                sub    BYTE PTR [rdi], 0x6c
@@ -127,12 +127,12 @@ I search all instructions with "rdi" register and find that:
    0:   80 2f 16                sub    BYTE PTR [rdi], 0x16
 
   ...
-```
+</pre>
 After many hours with the debugger i understand that bytes are encoded with (xor, add, sub), but not only one time. Each byte encoded 4 times after every 256 blocks of (xor, add, sub)
 
 So, i write all bytes in cmp instruction to file "cmp":
-```
-x5a
+<pre>
+0x5a
 0xb0
 0x75
 0x9d
@@ -141,10 +141,10 @@ x5a
 0x7a
 0xcb
 ...
-```
+</pre>
 
 Also all (xor, add, sub) blocks values in bytes.lst:
-```
+<pre>
 0xec
 0x3
 0x6c
@@ -153,10 +153,10 @@ Also all (xor, add, sub) blocks values in bytes.lst:
 0x2b
 0x16
 ...
-```
+</pre>
 
 And wrote this script with reversed encode function:
-```
+<pre>
 with open('cmp', 'r') as f:
     enc = f.read().split('\n')
 
@@ -184,10 +184,10 @@ for i, w in enumerate(enc):
     res = res % 256 # VERY IMPORTANT % (to normalize negative values of bytes)
     flag += chr(res)
 print(flag)
-```
+</pre>
 
 And:
-```
+<pre>
 ubuntu@ubuntu:~/Desktop/protector$ python3 flag.py
 KCTF{fl4g_h1d35_1n_pl41n_51gh7_1f_y0u_g37_r1d_0f_7h3_g4rb4g3}
-```
+</pre>
