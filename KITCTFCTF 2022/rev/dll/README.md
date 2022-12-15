@@ -17,7 +17,7 @@ for i in fl:
     ...: 
     ...: 
 </pre>
-OUTPUT: 
+OUTPUT: <br>
 }111pumr4w_r0f_3mkc4rc_y543{FTCK
 
 flag is reversed:
