@@ -11,6 +11,7 @@ Cod
 Compile `ehdump` tool: https://github.com/chop-project/chop/tree/main/tools/ehdump
 
 And use it to dump `try` block `start` and `end` addresses and `lp` - start of the `catch` block. 
+Filter by `ar_disp==0`, so catch block will catch all exceptions without type matching.
 
 ```shell
 ehdump ./index.cgi | head -n -1 | jq '.[].lsda.cses[] | select(any(.actions[]?; .ar_disp==0)) | {start,end,lp}'
